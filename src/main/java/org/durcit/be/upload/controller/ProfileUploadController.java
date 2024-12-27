@@ -20,12 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProfileUploadController {
 
     private final ProfileUploadService profileUploadService;
-    private final MemberService memberService;
 
     @PutMapping(consumes = {"multipart/form-data"})
     public ResponseEntity<ResponseData> profileImageUpdate(MultipartFile file) {
-        Member member = memberService.getById(SecurityUtil.getCurrentMemberId());
-        profileUploadService.uploadProfileReturnUrl(new ProfileImageRequest(file), member.getEmail());
+        profileUploadService.updateProfileImage(new ProfileImageRequest(file));
         return ResponseData.toResponseEntity(ResponseCode.UPDATE_PROFILE_IMAGE_SUCCESS);
     }
 

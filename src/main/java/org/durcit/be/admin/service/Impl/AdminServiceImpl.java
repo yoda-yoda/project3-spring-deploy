@@ -22,6 +22,7 @@ import org.durcit.be.system.exception.auth.MemberNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -105,7 +106,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     public Page<AdminLogResponse> getPagedLogs(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "timestamp"));
         return logService.findAll(pageRequest);
     }
 

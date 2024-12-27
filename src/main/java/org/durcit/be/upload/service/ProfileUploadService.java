@@ -4,4 +4,5 @@ import org.durcit.be.upload.dto.ProfileImageRequest;
 
 public interface ProfileUploadService {
     public String uploadProfileReturnUrl(ProfileImageRequest profileImageRequest, String email);
+    public String updateProfileImage(ProfileImageRequest profileImageRequest);
 }

@@ -31,11 +31,49 @@ import static org.durcit.be.upload.util.UploadUtil.validateFileSize;
 public class S3ProfileUploadServiceImpl implements ProfileUploadService {
 
     private final S3Client s3Client;
+    private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     @Value("${custom.s3.bucket-name:burcit}")
     private String bucketName;
 
     private static final String PROFILE_IMAGE_FOLDER = "profile-images/";
+
+    public String updateProfileImage(ProfileImageRequest profileImageRequest) {
+        if (profileImageRequest == null || profileImageRequest.getProfileImage() == null) {
+            log.warn("No profile image provided, generating a random profile image.");
+            return null;
+        }
+
+        MultipartFile profileImage = profileImageRequest.getProfileImage();
+        validateFileSize(profileImage);
+
+        try {
+            String uniqueFileName = PROFILE_IMAGE_FOLDER + UUID.randomUUID() + "_" + profileImage.getOriginalFilename();
+
+            s3Client.putObject(
+                    PutObjectRequest.builder()
+                            .bucket(bucketName)
+                            .key(uniqueFileName)
+                            .contentType(profileImage.getContentType())
+                            .build(),
+                    RequestBody.fromInputStream(profileImage.getInputStream(), profileImage.getSize())
+            );
+
+
+            String s3Url = String.format("https://%s.s3.%s.amazonaws.com/%s",
+                    bucketName, Region.of("ap-northeast-2").id(), uniqueFileName);
+
+            Member member = memberService.getById(SecurityUtil.getCurrentMemberId());
+            member.setProfileImage(s3Url);
+
+            return s3Url;
+
+        } catch (IOException e) {
+            log.error("Failed to upload profile image", e);
+            throw new S3UploadException(S3_UPLOAD_ERROR);
+        }
+    }
 
     @Override
     public String uploadProfileReturnUrl(ProfileImageRequest profileImageRequest, String email) {
