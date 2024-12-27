@@ -33,6 +33,8 @@
 - **메인 사이트**: [http://durcit.site](http://durcit.site)
 - **어드민 페이지**: [http://admin.durcit.site](http://admin.durcit.site)
 
+<img width="1045" alt="arch" src="https://github.com/user-attachments/assets/daad3eb0-e2fc-4f98-a5df-d2bb7be2ca6e" />
+
 ### **기술 스택**
 - **프론트엔드**: React.js, Tailwind CSS
 - **백엔드**: Spring Boot, JPA, WebSocket, Spring Security, JWT 인증, RabbitMQ
