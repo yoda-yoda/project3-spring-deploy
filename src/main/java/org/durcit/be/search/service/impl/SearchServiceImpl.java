@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -31,14 +33,20 @@ public class SearchServiceImpl implements SearchService {
         List<SearchResultResponse> results = new ArrayList<>();
 
         results.addAll(postRepository.findByTitleContaining(query).stream()
+                .filter(p -> !p.isDeleted())
                 .map(post -> new SearchResultResponse("post", post.getId(), post.getTitle()))
                 .toList());
 
         results.addAll(memberRepository.findByNicknameContaining(query).stream()
+                .filter(m -> !m.isBlocked())
                 .map(user -> new SearchResultResponse("user", user.getId(), user.getNickname()))
                 .toList());
 
+        Set<String> seenContents = new HashSet<>();
         results.addAll(postsTagRepository.findByContentsContaining(query).stream()
+                .filter(tag -> !tag.getPost().isDeleted())
+                .filter(p -> !p.isDeleted())
+                .filter(tag -> seenContents.add(tag.getContents()))
                 .map(tag -> new SearchResultResponse("tag", tag.getId(), tag.getContents()))
                 .toList());
 

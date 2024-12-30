@@ -40,12 +40,15 @@ public class AuthService {
     private final VerificationTokenRepository tokenRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepositoryAdapter refreshTokenRepository;
-    private final AuthenticationManager authenticationManager;
 
     @Transactional
     public void register(RegisterRequest request, String profileImageUrl) {
         if (memberRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new DuplicateEmailException(DUPLICATE_EMAIL_ERROR);
+        }
+
+        if (memberRepository.findByNickname(request.getNickname()).isPresent()) {
+            throw new DuplicateNicknameException(EXISTING_NICKNAME_ERROR);
         }
 
         if (profileImageUrl == null) {

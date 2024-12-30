@@ -54,12 +54,14 @@ public class PostCardResponse {
         return PostCardResponse.builder()
                 .id(post.getId())
                 .title(post.getTitle())
-                .content(post.getContent())
+                .content(post.getContent().length() > 20
+                        ? post.getContent().substring(0, 20) + "..."
+                        : post.getContent())
                 .author(post.getMember().getNickname())
                 .views(post.getViews())
                 .likeCount((long) post.getLikes().size())
                 .hasImage(post.getImages() != null && !post.getImages().isEmpty())
-                .commentCount(post.getComments() != null ? post.getComments().size() : 0L)
+                .commentCount(post.getComments() != null ? post.getComments().stream().filter(p -> !p.isDeleted()).toList().size() : 0L)
                 .userThumbnail(post.getMember().getProfileImage())
                 .postThumbnail(thumbnailUrl)
                 .createdAt(TimeAgoUtil.formatElapsedTime(post.getUpdatedAt()))

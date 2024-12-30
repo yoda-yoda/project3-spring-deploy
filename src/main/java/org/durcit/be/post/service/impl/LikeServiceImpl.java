@@ -34,6 +34,7 @@ public class LikeServiceImpl implements LikeService {
     public List<PostCardResponse> getLikedPostsByMember(Long memberId) {
         List<Like> likes = likeRepository.findAllByMemberId(memberId);
         return likes.stream()
+                .filter(like -> !like.getPost().isDeleted())
                 .map(like -> PostCardResponse.fromEntity(like.getPost()))
                 .collect(Collectors.toList());
     }

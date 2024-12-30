@@ -29,21 +29,21 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Transactional
     public void userBlock(Long memberId) {
-        Member member = memberService.getById(memberId);
+        Member member = memberService.getByIdForAdmin(memberId);
         member.setBlocked(true);
         memberRepository.save(member);
     }
 
     @Transactional
     public void userUnblock(Long memberId) {
-        Member member = memberService.getById(memberId);
+        Member member = memberService.getByIdForAdmin(memberId);
         member.setBlocked(false);
         memberRepository.save(member);
     }
 
     @Transactional
     public void userDeletePermanent(Long memberId) {
-        Member member = memberService.getById(memberId);
+        Member member = memberService.getByIdForAdmin(memberId);
         memberRepository.delete(member);
     }
 

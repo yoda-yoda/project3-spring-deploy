@@ -32,7 +32,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Page<Post> findAllByDeletedFalse(Pageable sortedPageable);
 
-    @Query("SELECT p FROM Post p JOIN p.postsTagList t WHERE t.contents IN :tag AND p.deleted = false")
+    @Query("SELECT p FROM Post p JOIN p.postsTagList t WHERE t.contents IN :tag AND p.deleted = false ORDER BY p.createdAt DESC")
     Page<Post> findPostsByTagsAndDeletedFalse(@Param("tag") List<String> tag, Pageable pageable);
 
     @Query("SELECT p FROM Post p JOIN p.postsTagList t WHERE t.contents = :tag AND p.deleted = false")

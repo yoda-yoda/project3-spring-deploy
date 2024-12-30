@@ -130,7 +130,7 @@ public class PostServiceImpl implements PostService {
         return posts.map(PostCardResponse::fromEntity);
     }
 
-    private PageImpl<PostCardResponse> getSortByHotCategory(Page<Post> posts, Pageable pageRequest) {
+    private Page<PostCardResponse> getSortByHotCategory(Page<Post> posts, Pageable pageRequest) {
         List<PostCardResponse> sortedPosts = posts.stream()
                 .map(PostCardResponse::fromEntity)
                 .sorted(Comparator.comparingLong((PostCardResponse p) -> p.getLikeCount() + p.getCommentCount())

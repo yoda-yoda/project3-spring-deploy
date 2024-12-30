@@ -40,6 +40,11 @@ public class MemberService extends DefaultOAuth2UserService {
         return memberRepository.findByNickname(nickname).orElseThrow(() -> new MemberNotFoundException(MEMBER_NOT_FOUND_ERROR));
     }
 
+    public Member getByIdForAdmin(Long id) {
+        return findById(id)
+                .orElseThrow(() -> new MemberNotFoundException(MEMBER_NOT_FOUND_ERROR));
+    }
+
     public Member getById(Long id) {
         return findById(id).stream()
                 .filter(Member::isVerified)

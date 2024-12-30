@@ -32,8 +32,7 @@ public class ProfileServiceImpl implements ProfileService {
     private final MemberService memberService;
 
     public MemberProfileResponse getMemberProfile(Long userId) {
-        Member member = memberRepository.findById(userId)
-                .orElseThrow(() -> new MemberNotFoundException(MEMBER_NOT_FOUND_ERROR));
+        Member member = memberService.getById(userId);
 
         return MemberProfileResponse.builder()
                 .email(member.getEmail())
