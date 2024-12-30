@@ -30,8 +30,8 @@
 ## 🚀 시작하기
 
 ### **프로젝트 URL**
-- **메인 사이트**: [http://durcit.site](http://durcit.site)
-- **어드민 페이지**: [http://admin.durcit.site](http://admin.durcit.site)
+- **메인 사이트**: [https://durcit.site](http://durcit.site)
+- **어드민 페이지**: [https://admin.durcit.site](http://admin.durcit.site)
 
 ### **기술 스택**
 - **프론트엔드**: React.js, Tailwind CSS
