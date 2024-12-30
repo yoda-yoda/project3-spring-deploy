@@ -34,7 +34,8 @@
 - **어드민 페이지**: [https://admin.durcit.site](https://admin.durcit.site)
 
 ### **아키텍처**
-<img width="1045" alt="arch" src="https://github.com/user-attachments/assets/daad3eb0-e2fc-4f98-a5df-d2bb7be2ca6e" />
+![arch-3d](https://github.com/user-attachments/assets/02a4094a-f64a-430d-b413-bae13d6ecb82)
+
 
 ### **ERD**
 <img width="1219" alt="erd-diagram" src="https://github.com/user-attachments/assets/93ce18c0-8450-404a-a8f5-f3a4dccc5c8c" />
